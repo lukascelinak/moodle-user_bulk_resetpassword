@@ -19,9 +19,7 @@
  *
  * For install, copy file to moodledir/admin/user/
  *
- * @package     mod_ratingprompts
  * @author      Lukas Celinak <lukascelinak@gmail.com>
- * @copyright   2022 Lukas Celinak, Edumood <lukascelinak@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
