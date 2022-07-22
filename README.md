@@ -1,8 +1,11 @@
 # User Bulk Action Reset Password #
+
 Action can reset passsword for selected users, 
 thats means moodle will reset password, 
 moodle will generate new and notify user with new password, 
 after login is user forced to change his password.
+
+For install, copy file to moodledir/admin/user/
 
 ## License ##
 
