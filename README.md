@@ -7,6 +7,77 @@ after login is user forced to change his password.
 
 For install, copy file to moodledir/admin/user/
 
+And put this code inside moodledir/admin/user/user_bulk_forms.php into function    public function get_actions(): array {}
+
+
+if (has_capability('moodle/user:update', $syscontext)) {
+            $actions['resetpassword'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_resetpassword.php'),
+                get_string('resetpassword','bulkusers'));
+        }
+        
+Example:
+
+    public function get_actions(): array {
+
+        global $CFG;
+
+        $syscontext = context_system::instance();
+        $actions = [];
+        if (has_capability('moodle/user:update', $syscontext)) {
+            $actions['confirm'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_confirm.php'),
+                get_string('confirm'));
+        }
+        if (has_capability('moodle/site:readallmessages', $syscontext) && !empty($CFG->messaging)) {
+            $actions['message'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_message.php'),
+                get_string('messageselectadd'));
+        }
+        if (has_capability('moodle/user:delete', $syscontext)) {
+            $actions['delete'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_delete.php'),
+                get_string('delete'));
+        }
+        $actions['displayonpage'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_display.php'),
+                get_string('displayonpage'));
+
+        if (has_capability('moodle/user:update', $syscontext)) {
+            $actions['download'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_download.php'),
+                get_string('download', 'admin'));
+        }
+
+        if (has_capability('moodle/user:update', $syscontext)) {
+            $actions['forcepasswordchange'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_forcepasswordchange.php'),
+                get_string('forcepasswordchange'));
+        }
+        if (has_capability('moodle/cohort:assign', $syscontext)) {
+            $actions['addtocohort'] = new action_link(
+                new moodle_url('/admin/user/user_bulk_cohortadd.php'),
+                get_string('bulkadd', 'core_cohort'));
+        }
+
+        // Any plugin can append actions to this list by implementing a callback
+        // <component>_bulk_user_actions() which returns an array of action_link.
+        // Each new action's key should have a frankenstyle prefix to avoid clashes.
+        // See MDL-38511 for more details.
+        $moreactions = get_plugins_with_function('bulk_user_actions', 'lib.php');
+        foreach ($moreactions as $plugintype => $plugins) {
+            foreach ($plugins as $pluginfunction) {
+                $actions += $pluginfunction();
+            }
+        }
+
+        return $actions;
+
+    }
+
+
+
+
 ## License ##
 
 2022 Lukas Celinak <lukascelinak@gmail.com>
