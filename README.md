@@ -7,14 +7,8 @@ after login is user forced to change his password.
 
 For install, copy file to moodledir/admin/user/
 
-And put this code inside moodledir/admin/user/user_bulk_forms.php into function    public function get_actions(): array {}
-
-
-if (has_capability('moodle/user:update', $syscontext)) {
-            $actions['resetpassword'] = new action_link(
-                new moodle_url('/admin/user/user_bulk_resetpassword.php'),
-                get_string('resetpassword','bulkusers'));
-        }
+Replace bulk user moodledir/admin/user/user_bulk_forms.php 
+Replace moodledir/lang/en/bulkusers.php
         
 Example:
 
